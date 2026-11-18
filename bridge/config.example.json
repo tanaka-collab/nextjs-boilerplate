@@ -1,8 +1,7 @@
 {
   "repositories": [
     "tanaka-collab/income-diagnosis",
-    "tanaka-collab/nextjs-boilerplate",
-    "tanaka-collab/social-lead-ai"
+    "tanaka-collab/nextjs-boilerplate"
   ],
   "poll_seconds": 90,
   "max_review_rounds": 3,

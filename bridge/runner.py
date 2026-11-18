@@ -220,6 +220,13 @@ class Bridge:
                           + '- This is a local execution report; full Surface integration not yet validated globally.\n'
                           + ('- Review findings: ' + '; '.join(x[:250] for x in safe_findings) if safe_findings else '- No reviewer findings reported.') + '\n', encoding='utf-8')
         paths = scan_before_push(checkout)
+        # Make commits work without mutating the user's global Git identity.
+        name = cmd(['git', 'config', '--get', 'user.name'], cwd=checkout)
+        if name.returncode != 0 or not name.stdout.strip():
+            checked(['git', 'config', 'user.name', 'UP-STREAM Codex Bridge'], cwd=checkout)
+        email = cmd(['git', 'config', '--get', 'user.email'], cwd=checkout)
+        if email.returncode != 0 or not email.stdout.strip():
+            checked(['git', 'config', 'user.email', 'codex-bridge@users.noreply.github.com'], cwd=checkout)
         checked(['git', 'add', '-A'], cwd=checkout)
         checked(['git', 'commit', '-m', f'Codex draft: {task.task_id} ({verdict})'], cwd=checkout)
         checked(['git', 'push', '-u', 'origin', branch], cwd=checkout, timeout=240)

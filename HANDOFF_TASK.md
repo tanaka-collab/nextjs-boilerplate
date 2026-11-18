@@ -1,15 +1,20 @@
 # ChatGPT → Codex 指示書
 
-- 状態: `READY`
+- 状態: `IDLE`
 - 更新日: 2026-11-18 (JST)
 - 対象リポジトリ: `tanaka-collab/nextjs-boilerplate`
 - タスクID: `AUTOPILOT-V31-SMOKE-20261118-03`
-- 目的: v3.1導入後、手動復旧を行わずにChatGPTのGitHub指示からCodex CLI実装・独立レビュー・Draft PRまで自動完走することを確認する。
+- 目的: 完了済み。v3.1の無人実行テストはGitHub Draft PR #6で検証された。
 - 実行承認: 2026-11-18に責任者から依頼されたAutopilot完成検証に含まれる、文書1件のみの無害な動作テスト。
 - 作業ブランチ: ローカル監視プログラムが作る `autopilot/task-*` のみ。
 - 安全条件: `AGENTS.md` の秘密情報保護・限定変更・停止条件を守る。マージ、追加課金、本番デプロイ、GitHub Actions変更、外部メッセージ送信は禁止。
 
-## 実施内容
+## 完了記録
+
+- 2026-11-18: Draft PR #6 https://github.com/tanaka-collab/nextjs-boilerplate/pull/6 を確認。独立レビュー PASS、文書1件＋報告書1件、未マージ。
+- 本タスクは完了済み。次回の新しい開発指示を受け取るまでは何も実行しない。
+
+## 実施内容（完了済み、再実行禁止）
 
 1. **新規Markdownファイル `docs/AUTOPILOT_V31_SMOKE_TEST.md` を1つだけ作成する**。既存文書と既存アプリコードは変更しない。
 2. 内容は以下の4項目を含める。

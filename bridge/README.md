@@ -2,7 +2,7 @@
 
 **目標**: ChatGPTからのGitHub指示 → Surfaceで常駐するCodex CLI → コード実装 → Codexによるレビュー・最大3回の修正 → GitHub Draft PR を追加API課金なしでつなぐ。
 
-現段階では **GitHubにソースを作成し、Python基本テスト5件を通過**。Surfaceにインストールされておらず、実際のCodex起動・GitHubプッシュ・PowerShell自動起動は未検証。完全自動化完了と誤認しないこと。
+現段階では **GitHubにソースを作成し、Pythonテスト6件（1件はGitの模擬結合テスト）を通過**。Surfaceにインストールされておらず、実際のCodex起動・GitHubプッシュ・PowerShell自動起動は未検証。完全自動化完了と誤認しないこと。
 
 ## 一度だけ行うセットアップ
 
@@ -14,7 +14,7 @@
 
 ## ChatGPTから仕事を入れる方法
 
-許可済み3リポジトリの main の `HANDOFF_TASK.md` をChatGPTがユーザーの開発指示を受けて更新する。記述例:
+許可済み公開2リポジトリ（PrivateはPC側のconfig.jsonへ明示追加）の main の `HANDOFF_TASK.md` をChatGPTがユーザーの開発指示を受けて更新する。記述例:
 
 ```markdown
 # ChatGPT → Codex

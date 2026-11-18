@@ -3,29 +3,27 @@
 - 状態: `READY`
 - 更新日: 2026-11-18 (JST)
 - 対象リポジトリ: `tanaka-collab/nextjs-boilerplate`
-- タスクID: `AUTOPILOT-V3-SMOKE-20261118-02`
-- 目的: Surfaceに導入したChappy × Codex Autopilot v3.0の第2回エンドツーエンド動作確認。
-- 実行承認: このタスクは責任者が2026-11-18に承認したローカルCodex CLI自動実行テスト。Codex Cloudの起動指示ではない。
-- 作業ブランチ: Windows監視プログラムが作る `autopilot/task-*` のみ。
-- 制限: 機密情報、個人情報、認証情報、既存のアプリコード、依存関係、GitHub Actions、本番設定に触れない。マージや本番デプロイを行わない。
+- タスクID: `AUTOPILOT-V31-SMOKE-20261118-03`
+- 目的: v3.1導入後、手動復旧を行わずにChatGPTのGitHub指示からCodex CLI実装・独立レビュー・Draft PRまで自動完走することを確認する。
+- 実行承認: 2026-11-18に責任者から依頼されたAutopilot完成検証に含まれる、文書1件のみの無害な動作テスト。
+- 作業ブランチ: ローカル監視プログラムが作る `autopilot/task-*` のみ。
+- 安全条件: `AGENTS.md` の秘密情報保護・限定変更・停止条件を守る。マージ、追加課金、本番デプロイ、GitHub Actions変更、外部メッセージ送信は禁止。
 
-## 実装指示
+## 実施内容
 
-1. **新規ファイル1件だけ** `docs/AUTOPILOT_V3_SMOKE_TEST.md` を作成する。既存の `docs/AUTOPILOT_SMOKE_TEST.md` は変更しない。
-2. UTF-8のMarkdown文書に次の内容を含める。
-   - 見出し: `# Autopilot v3 自動開発 動作確認`
-   - タスクID: `AUTOPILOT-V3-SMOKE-20261118-02`
-   - 本文の一文: `この文書はChatGPTのGitHub指示からCodex CLIの実装、独立レビュー、Draft PR作成までを確認するためのテストです。`
-   - `このテストではアプリ本体の変更・本番デプロイ・PRマージを行いません。`
-3. 作成した文書が存在し、上記4つの要素を含むことを実際に読み戻して確認する。
-4. 既存ファイルを編集せず、作業ツリーに新規Markdown文書1件だけが増えていることを確認する。
-5. 実際に行った検証と行っていない検証を正確に報告する。
+1. **新規Markdownファイル `docs/AUTOPILOT_V31_SMOKE_TEST.md` を1つだけ作成する**。既存文書と既存アプリコードは変更しない。
+2. 内容は以下の4項目を含める。
+   - 見出し: `# Autopilot v3.1 無人実行確認`
+   - タスクID: `AUTOPILOT-V31-SMOKE-20261118-03`
+   - 文: `この文書はChatGPTからCodex CLIへの指示、ファイル生成、独立レビュー、Draft PR作成を人手による復旧なしで検証するためのものです。`
+   - 文: `今回の変更は文書1件のみとし、アプリ機能変更、PRマージ、本番デプロイは実施しません。`
+3. UTF-8で読み戻し、上記4項目が含まれていることを検証する。ファイル変更が指定された新規Markdown 1件のみであることを確認する。
+4. 実施した検証だけを簡潔に報告する。実装担当Codexはコミット・push・PR作成・デプロイを行わない。
 
-## 役割と受け入れ条件
+## 受け入れ条件
 
-- Codex CLIはファイル作成と検証だけを担当し、コミット・push・PR作成・メッセージ送信をしない。
-- Windows Autopilot監視プログラムは独立した読み取り専用レビューで `VERDICT: PASS` を確認した場合のみ、`CODEX_LATEST.md` を更新してコミット・pushし、`main`向けのDraft PRを作成・検証する。
-- 変更ファイルは、新規文書と監視プログラムが更新する `CODEX_LATEST.md` の計2件を原則とする。
-- テスト失敗時には安全に停止し、成功と報告しない。失敗時のGitHub Issue作成はv3監視プログラムの管理下に限る。
-- `PROJECT_STATUS.md` にある過去の `IDLE` 記載は古い記録。本件についてはこの `HANDOFF_TASK.md` の `READY` が現在の明示的承認である。ただし、`PROJECT_STATUS.md` 自体は変更しない。
-- 新たなAPI課金、追加クレジット購入、`main`への反映、PRマージ、本番デプロイは行わない。GitHub連携による既存のVercelプレビューが動く可能性はある。
+- 独立した読み取り専用Codexレビューで `VERDICT: PASS` を確認した場合のみ、Windows Autopilotが `CODEX_LATEST.md` 更新・コミット・push・`main`向けDraft PR作成を行う。
+- 変更対象は `docs/AUTOPILOT_V31_SMOKE_TEST.md` とWindows監視プログラムが更新する `CODEX_LATEST.md` の2件に限定する。
+- 新しい指示は `autopilot-control` ブランチの本書を正とし、`main` の `HANDOFF_TASK.md` は以前の指示として扱う。
+- `main` にマージしない。Vercelとの既存連携によりプレビュー環境が生成される場合があるが、本番反映を行わない。
+- 失敗時は安全停止と原因記録を行い、レビューを飛ばしてPRを出さない。

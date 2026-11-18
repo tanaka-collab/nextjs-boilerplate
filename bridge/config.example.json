@@ -1,0 +1,10 @@
+{
+  "repositories": [
+    "tanaka-collab/income-diagnosis",
+    "tanaka-collab/nextjs-boilerplate",
+    "tanaka-collab/social-lead-ai"
+  ],
+  "poll_seconds": 90,
+  "max_review_rounds": 3,
+  "state_dir": "%LOCALAPPDATA%\\UPSTREAM\\CodexBridge"
+}

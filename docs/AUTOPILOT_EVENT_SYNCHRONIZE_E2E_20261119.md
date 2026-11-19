@@ -2,7 +2,7 @@
 
 Task ID: AUTOPILOT-EVENT-SYNCHRONIZE-E2E-20261119
 
-event_phase: opened
+event_phase: synchronize
 
 This is a documentation-only test of event-triggered ChatGPT PR reviews.
 

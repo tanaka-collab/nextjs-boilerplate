@@ -84,3 +84,12 @@ This section documents an explicitly authorized, documentation-only GitHub event
 - A reviewer should never treat this test as a bug requiring Codex repair. No CHANGES_REQUESTED unless an actual unexpected change is found. The test PR must stay draft and unmerged.
 - Existing periodic PR-review task remains disabled after event-mode verification, and all other automation jobs are left unchanged.
 - Don't touch the Sendnav production directory, other Codex work, main, Github Actions, secrets or application source. No deploy, merge or external business action.
+
+### Event E2E closure: COMPLETE (2026-11-19 JST)
+
+- Test PR: https://github.com/tanaka-collab/nextjs-boilerplate/pull/9 (Open/Draft retained as evidence, unmerged).
+- `opened` head: `bd9a367b449fcb70dd4dc36e90b21cc65b8d2639`; GitHub event automation ran and posted ChatGPT PASS review for this exact SHA.
+- `synchronize` head: `e37488a17ecd654b3ff4881daedf7d2971603132`; one fast-forward documentation-only commit changed `event_phase: opened` to `event_phase: synchronize`; GitHub event automation ran and posted a separate ChatGPT PASS review for the new SHA.
+- Only the test document was added/changed in this PR; no main push, application change, production change, merge or deployment was requested.
+- The periodic 1-hour PR review remains disabled, and the event-driven GitHub PR review remains enabled. Routine future PRs are to follow normal safety review rules; DO NOT repeat this special smoke test.
+- Global handoff remains `IDLE`; do not auto-start local Codex for this record.

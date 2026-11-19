@@ -69,3 +69,18 @@ After correction and a new head SHA, ChatGPT will independently inspect the chan
 - No API billing, hosting or deployment changes.
 - All PRs remain Draft, never merge or auto-approve. If a safeguard prevents operation, stop safely and report it; do not weaken controls.
 - Old text about manual Codex Cloud launch in AGENTS.md documents the old flow. For this new explicitly approved local Windows Autopilot E2E task, use the already-established local CLI route and preserve all other AGENTS.md restrictions.
+
+
+## One-time event-triggered GitHub review verification (2026-11-19)
+
+This section documents an explicitly authorized, documentation-only GitHub event smoke test. It is **not** a new local Codex implementation task; the global handoff stays `IDLE`. The test does not require or authorize the Windows Autopilot to create a new PR or modify the repo.
+
+- Task ID: `AUTOPILOT-EVENT-SYNCHRONIZE-E2E-20261119`
+- Scope: One new Open/Draft PR from `autopilot/task-event-sync-e2e-20261119` to `main`; other existing PRs and branches are out of scope.
+- Allowed PR changed file: `docs/AUTOPILOT_EVENT_SYNCHRONIZE_E2E_20261119.md` ONLY.
+- Initial file content: Markdown heading `# Autopilot GitHub event review E2E`, task ID above, `event_phase: opened`, sentence `This is a documentation-only test of event-triggered ChatGPT PR reviews.`, and `No application code, configuration, credentials, or production behavior is changed.`
+- GitHub opened event: verify PR is Draft/Open, matching task, only the allowed documentation file changed, and no secrets/code. Post ChatGPT PASS review for the current exact head SHA; never approve/merge.
+- Following GitHub synchronize event: update **only** `event_phase: opened` to `event_phase: synchronize` on the SAME Draft PR branch. Verify the new head SHA, one-line delta, and that the GitHub event actually woke the review automation. Post a distinct ChatGPT PASS review on the NEW head SHA.
+- A reviewer should never treat this test as a bug requiring Codex repair. No CHANGES_REQUESTED unless an actual unexpected change is found. The test PR must stay draft and unmerged.
+- Existing periodic PR-review task remains disabled after event-mode verification, and all other automation jobs are left unchanged.
+- Don't touch the Sendnav production directory, other Codex work, main, Github Actions, secrets or application source. No deploy, merge or external business action.

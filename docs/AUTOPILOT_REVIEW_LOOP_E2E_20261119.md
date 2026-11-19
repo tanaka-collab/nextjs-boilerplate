@@ -2,7 +2,7 @@
 
 Task ID: AUTOPILOT-REVIEW-LOOP-E2E-20261119-01
 
-review_state: AWAITING_CHATGPT_REVIEW
+review_state: REPAIRED_BY_CODEX
 
 This document only tests the PR review and Codex correction feedback loop.
 

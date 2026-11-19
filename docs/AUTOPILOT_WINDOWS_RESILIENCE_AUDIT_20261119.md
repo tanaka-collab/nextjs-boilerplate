@@ -100,6 +100,18 @@ One initial isolated rotation probe accidentally appended a single benign synthe
     powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\hash_normalization_probe.ps1" -TaskFile "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\HANDOFF_TASK_fixture.md" -EvidencePath "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\hash_normalization.json"
     ```
 
+#### Manifest record/output projection
+
+This sanitized projection mirrors the per-check records in verification.json. The exact command lines are shown above; each captured result came from the matching record's output field.
+
+| Record | Started (JST) | Ended (JST) | Exit | Captured output |
+| --- | --- | --- | ---: | --- |
+| python_unittest_56 | 19:06:15.3172419 | 19:06:19.4199291 | 0 | EXCLUDED=test_process_lock_blocks_second_process_and_releases_after_crash; Ran 56 tests in 3.955s; OK. |
+| python_ast | 19:06:19.4587714 | 19:06:19.5376334 | 0 | PYTHON_AST_OK files=4. |
+| watchdog_parser | 19:06:19.5418307 | 19:06:19.8661391 | 0 | PASS; PowerShell 5.1.26100.9974; 1,072 tokens; 0 parse errors. |
+| watchdog_fixtures | 19:06:19.8691446 | 19:06:22.1709456 | 0 | Running=NO_ACTION; Ready=WOULD_START; missing DryRun=exit 2; missing/stale health=missing/stale; allowlist exact; rotation=two generations; unavailable storage=STORAGE_UNAVAILABLE, no_drive_write=true. |
+| ready_intake_fixture | 19:06:22.1717908 | 19:06:25.5292815 | 0 | PASS; task SHA=4349fae9f405...; branch=autopilot/task-4349fae9f405; one implementation, review, and PR-stub call; replay suppressed; dirty old hash refused; untracked sentinel preserved; no real GitHub or Codex CLI. |
+
 - Two earlier evidence-runner attempts are preserved under `attempt-01/` and `attempt-02/`; they exposed cache-path and isolated-fixture setup errors and are not counted as passing runs. The corrected 19:06 run above passed every check. No production task, state file, or existing repository worktree was changed by these fixtures.
 - The scheduled-task watchdog invocation uses child-process `-ExecutionPolicy Bypass`; the machine policy was not changed. No force termination, machine restart, task stop, or D: disconnection was used.
 
@@ -109,7 +121,7 @@ One initial isolated rotation probe accidentally appended a single benign synthe
 
 **Read-only local alternative:** PowerShell, Git, the GitHub connector, the local source, scheduler/health files, backup manifest, test outputs, and the current PR diff were readable. The canonical handoff hashes and recorded test outputs were compared with the local evidence files. This verifies the reported test runs and observed state; it is not a second Codex reviewer and does not convert the reviewer-runtime failure into an independent PASS.
 
-The latest ChatGPT review available at the `be1b08c` snapshot was review `5973142031`, submitted at 19:20:06 JST against HEAD `be1b08c993475569bfb7892d7e04761c6473a40d`, with result **BLOCKED**. It confirmed the cycle sequence and the command/time/result entries, then requested the verification-manifest SHA-256 and output summaries in this same document; this revision adds them above. It also stated that the remote reviewer cannot access the local D: source or original evidence, so that part remains **INDEPENDENTLY UNVERIFIED**. At the 19:12 JST process check, no task-specific `codex exec` correction process was active; the existing Codex desktop processes were left untouched. The next same-PR push will generate another synchronize event; that review result is not yet available and remains **PENDING**. The 18:19:52 JST review `5972297569` was **CHANGES_REQUESTED** and its cycle-94/99 finding is reconciled above.
+The ChatGPT review at 19:20:06 JST against HEAD be1b08c993475569bfb7892d7e04761c6473a40d was BLOCKED and requested the verification-manifest SHA-256 and output summaries; these were added. The next review at 19:24:36 JST against HEAD 671cd3269eb651d8844a3b8c203277608f546ff6 was also BLOCKED. It confirmed the hash and summaries, then asked for the relevant manifest records and outputs in this document; the sanitized projection above addresses that request. It confirmed the Vercel check succeeded but could not access the D: original manifest, scripts, or local source, so those remain INDEPENDENTLY UNVERIFIED. At the 19:24 JST process check, no task-specific Codex exec correction process was active; the existing Codex desktop processes were left untouched. The next same-PR push will generate another synchronize event; that review result is not yet available and remains PENDING. The 18:19:52 JST review 5972297569 was CHANGES_REQUESTED and its cycle-94/99 finding is reconciled above.
 
 ## Rollback and pending evidence
 

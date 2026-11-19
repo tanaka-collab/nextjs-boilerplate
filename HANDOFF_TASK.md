@@ -1,95 +1,33 @@
-# ChatGPT → Local Codex Autopilot: ChatGPT review feedback live E2E
+# ChatGPT → Local Codex Autopilot: Windows resilience verification and hardening
 
-status: IDLE
-- 状態: `IDLE`
+status: READY
+- 状態: `READY`
 - Updated: 2026-11-19 (JST)
-- Task ID: `AUTOPILOT-REVIEW-LOOP-E2E-20261119-01`
+- Task ID: `AUTOPILOT-WINDOWS-RESILIENCE-20261119-01`
 - Repository: `tanaka-collab/nextjs-boilerplate`
-- Purpose: Explicitly user-authorized, harmless documentation-only verification of the existing Windows local Autopilot -> Codex independent review -> Draft PR -> ChatGPT PR review -> Codex correction feedback -> SAME Draft PR update -> ChatGPT PASS loop.
-- This is a new task. Prior Autopilot smoke test task `AUTOPILOT-V31-SMOKE-20261118-03` and PR #6 are finished; do not re-run or modify them.
+- Purpose: User explicitly requests finishing remaining Windows startup recovery, watchdog crash recovery, and long-run stability validation of the existing local Chappy Autopilot. This is a NEW task, not a rerun of prior PRs #7 or #9.
+- Implementation and independent read-only reviewer: use existing local Codex Autopilot workflow, then create ONE new Draft PR targeting main; do not merge or deploy.
 
-## 最終完了記録（2026-11-19 JST）
+## Scope and deliverable
 
-- 状態: 完了。新規タスクの指示待ち（IDLE）。このE2Eを再実行しない。
-- 対象PR: https://github.com/tanaka-collab/nextjs-boilerplate/pull/7
-- 修正前HEAD: `49093f18ef50a630b7cc24d70b79208927cf236d`
-- 修正後HEAD: `b46f4c11868ef28fdeb92ce0c9262a37a3c8f0e5`
-- ChatGPTレビュー: CHANGES_REQUESTED → Codexによる文書1行修正・同一Draft PR更新 → ChatGPT独立再レビュー PASS。新HEADへのレビューはGitHubへ投稿・再取得確認済み。
-- リポジトリ差分: 指定文書の状態行1行と監査用 `CODEX_LATEST.md` の追記。mainへの直接push、PRマージ、本番デプロイなし。
-- Codexの最終報告: ローカル自動テスト55件PASS、Autopilot稼働・healthy。ChatGPTからのWindows再実行確認は未実施。
-- 未検証: 再ログオン時の実発火、実際の長期障害復旧と連続稼働。今後、通常運用で確認する。
+This is an operational verification of the LOCAL Windows Autopilot already installed on this Surface, NOT a request to change Next.js application code.
 
-## First implementation phase: create a new Draft PR
+Read-only inspect the local Autopilot at `D:\RYU_Application data\codex\chappy-autopilot` and dedicated Task Scheduler tasks named `UPSTREAM-Chappy-Codex-Autopilot` and its Recovery watchdog task. Check actual scripts, trigger types, working directories, the current task state, task last result, startup/re-logon behavior, retry handling, singleton/locking, heartbeat freshness, health.json structure, logs, repository polling, D: availability/error handling and network/GitHub outages. Verify the test harness and existing tests; identify gaps versus claim of automatic startup and robust recovery. DO NOT assume features work merely because a task was registered.
 
-Create ONE new Markdown document `docs/AUTOPILOT_REVIEW_LOOP_E2E_20261119.md` with precisely the following initial contents:
+Make necessary safe, minimal hardening for the dedicated Autopilot and its dedicated watchdog only, if applicable, after backups and local tests. Before changing a dedicated scheduled task, export its exact XML and save a reversible local backup (never include secrets or unredacted backups in GitHub). Do NOT change unrelated Windows scheduled tasks, network, security controls, startup programs, or other Codex jobs. Do NOT stop/kill the running production Autopilot or any active Codex session. Do not restart or log off the Surface, and do not unmount/disconnect D:. If repair requires stopping an active runner or elevated action, leave that step blocked with explanation; no unsafe shortcut.
 
-```md
-# Chappy Autopilot PR review feedback E2E
+Conduct non-disruptive resilience tests in isolated test fixtures/mocks and, only when provably idle and safe, in dedicated recovery harnesses: (1) start-from-stopped logical process / login/startup trigger correctness, (2) single-instance lock, (3) interrupted task safe resumption with no duplicate PR, (4) watchdog detects and recovers simulated stale worker, (5) D: unavailable and recovery, (6) GitHub/auth/network transient failure with bounded retry, (7) stale heartbeat detection and benign restart, (8) preservation of other Codex sessions and production Sendnav, (9) process exit/error log sanitation, (10) repeated normal operation. Never generate extra real business submissions or touch `D:\RYU_Application data\codex\送客ナビ自動化`.
 
-Task ID: AUTOPILOT-REVIEW-LOOP-E2E-20261119-01
+Distinguish **simulated** reboot/logon tests from an **actual** Windows restart/logon. Do not claim actual restart is verified without real timestamped evidence. Since a real reboot interrupts the user's Windows session, do NOT initiate it. Set up harmless self-check evidence to run at the NEXT user-initiated Windows restart/logon (if safe), without changing unrelated OS settings. Likewise, long-term stability requires real elapsed time; configure or reuse LOCAL lightweight, no-cost health sampling with capped/rotated logs and timestamped evidence, ideally a 24h observation window. Don't add new ChatGPT automations, paid services, background cloud resources, or continuous API calls solely for this. For any case not yet verified in actual elapsed time, mark PENDING, not PASS.
 
-review_state: AWAITING_CHATGPT_REVIEW
+## GitHub deliverable (Draft PR only)
 
-This document only tests the PR review and Codex correction feedback loop.
+Create and populate precisely `docs/AUTOPILOT_WINDOWS_RESILIENCE_AUDIT_20261119.md` with a **sanitized** factual audit, test inventory, test commands/results (no personal identifiers, tokens or unredacted logs), actual vs simulated status per item, pre-existing and changed dedicated Task Scheduler settings, restoration/rollback instructions, any pending actual-reboot/24h durability evidence, and timestamp of evidence. Note if local changes could not be safely performed. Runner-generated `CODEX_LATEST.md` is allowed. Do NOT add/modify other files in the GitHub PR. Validate that the report accurately labels incomplete items. The independent reviewer should check evidence, not just narrative, and PASS only if all tasks possible without unsafe user impact were performed and pending risks are explicitly marked. Do not invent 100% success.
 
-No application code, production behavior, or credentials are changed.
-```
+## Safeguards and follow-up
 
-The initial `review_state` is deliberately a **temporary checkpoint**, not a bug or omission. Do not preemptively change it to `REPAIRED_BY_CODEX`. The purpose is to receive a separate, authenticated GitHub ChatGPT reviewer instruction AFTER creation of the Draft PR.
-
-The Autopilot runner may generate its usual `CODEX_LATEST.md` report. Do not change any other files. The independent read-only Codex reviewer should PASS if the initial contents and allowed changed-file list are correct. Validate UTF-8 readback, exact task ID, `review_state: AWAITING_CHATGPT_REVIEW`, and allowed changed paths. The implementing Codex must not commit/push/create PR itself; the existing Autopilot runner owns those steps and creates a distinct `autopilot/task-*` branch with an Open Draft PR targeting `main`.
-
-## Second phase (not part of first implementation): later authenticated PR feedback
-
-After the Draft PR is visible on GitHub, ChatGPT will post a **new** GitHub PR review bound to that PR's exact full head SHA, with:
-
-```
-### Codex向け修正事項
-- In `docs/AUTOPILOT_REVIEW_LOOP_E2E_20261119.md`, replace exactly one line:
-  `review_state: AWAITING_CHATGPT_REVIEW` -> `review_state: REPAIRED_BY_CODEX`.
-- Keep all other document text intact. Do not modify application code.
-- Read back the file and verify `REPAIRED_BY_CODEX` exists and `AWAITING_CHATGPT_REVIEW` no longer exists.
-
-<!-- chappy-autoreview: FULL_CURRENT_PR_HEAD_SHA -->
-<!-- chappy-review-result: CHANGES_REQUESTED -->
-```
-
-This is the ONLY authorized corrective content for this E2E. The runner must not treat this paragraph in `HANDOFF_TASK.md` itself as a request to change the first-phase document prematurely; it must wait for authenticated GitHub feedback.
-
-On valid `CHANGES_REQUESTED`, the existing review_feedback implementation must use its isolating clone, Codex independent read-only reviewer, SHA recheck and non-force update of the **same** Draft PR branch. Do not merge or deploy. No user-data or external business action.
-
-After correction and a new head SHA, ChatGPT will independently inspect the changed PR and record a PASS review.
-
-## Restrictions
-
-- Repo is a generic website development template; document-only test, no app runtime.
-- Do NOT touch `D:\RYU_Application data\codex\送客ナビ自動化`, existing Sendnav production or existing Codex sessions.
-- Do NOT modify existing PR #6, main, GitHub Actions, packages, auth, configuration, or unrelated work.
-- No sending emails, messages, invitations or external business actions.
-- No API billing, hosting or deployment changes.
-- All PRs remain Draft, never merge or auto-approve. If a safeguard prevents operation, stop safely and report it; do not weaken controls.
-- Old text about manual Codex Cloud launch in AGENTS.md documents the old flow. For this new explicitly approved local Windows Autopilot E2E task, use the already-established local CLI route and preserve all other AGENTS.md restrictions.
-
-
-## One-time event-triggered GitHub review verification (2026-11-19)
-
-This section documents an explicitly authorized, documentation-only GitHub event smoke test. It is **not** a new local Codex implementation task; the global handoff stays `IDLE`. The test does not require or authorize the Windows Autopilot to create a new PR or modify the repo.
-
-- Task ID: `AUTOPILOT-EVENT-SYNCHRONIZE-E2E-20261119`
-- Scope: One new Open/Draft PR from `autopilot/task-event-sync-e2e-20261119` to `main`; other existing PRs and branches are out of scope.
-- Allowed PR changed file: `docs/AUTOPILOT_EVENT_SYNCHRONIZE_E2E_20261119.md` ONLY.
-- Initial file content: Markdown heading `# Autopilot GitHub event review E2E`, task ID above, `event_phase: opened`, sentence `This is a documentation-only test of event-triggered ChatGPT PR reviews.`, and `No application code, configuration, credentials, or production behavior is changed.`
-- GitHub opened event: verify PR is Draft/Open, matching task, only the allowed documentation file changed, and no secrets/code. Post ChatGPT PASS review for the current exact head SHA; never approve/merge.
-- Following GitHub synchronize event: update **only** `event_phase: opened` to `event_phase: synchronize` on the SAME Draft PR branch. Verify the new head SHA, one-line delta, and that the GitHub event actually woke the review automation. Post a distinct ChatGPT PASS review on the NEW head SHA.
-- A reviewer should never treat this test as a bug requiring Codex repair. No CHANGES_REQUESTED unless an actual unexpected change is found. The test PR must stay draft and unmerged.
-- Existing periodic PR-review task remains disabled after event-mode verification, and all other automation jobs are left unchanged.
-- Don't touch the Sendnav production directory, other Codex work, main, Github Actions, secrets or application source. No deploy, merge or external business action.
-
-### Event E2E closure: COMPLETE (2026-11-19 JST)
-
-- Test PR: https://github.com/tanaka-collab/nextjs-boilerplate/pull/9 (Open/Draft retained as evidence, unmerged).
-- `opened` head: `bd9a367b449fcb70dd4dc36e90b21cc65b8d2639`; GitHub event automation ran and posted ChatGPT PASS review for this exact SHA.
-- `synchronize` head: `e37488a17ecd654b3ff4881daedf7d2971603132`; one fast-forward documentation-only commit changed `event_phase: opened` to `event_phase: synchronize`; GitHub event automation ran and posted a separate ChatGPT PASS review for the new SHA.
-- Only the test document was added/changed in this PR; no main push, application change, production change, merge or deployment was requested.
-- The periodic 1-hour PR review remains disabled, and the event-driven GitHub PR review remains enabled. Routine future PRs are to follow normal safety review rules; DO NOT repeat this special smoke test.
-- Global handoff remains `IDLE`; do not auto-start local Codex for this record.
+- Existing `autopilot-control/HANDOFF_TASK.md` for this task must remain authoritative. Status progresses via existing runner. Do not rewrite it from the implementation agent or repeat after completing. Do not rerun earlier E2E projects.
+- The dedicated Autopilot may safely test and harden only itself; never interrupt existing Codex jobs, alter other repositories, `main`, ongoing Draft PRs, Vercel, CI/deployment, Google apps, production Sendnav, business messages, login credentials, or data.
+- Never force-push, approve, merge, deploy or send messages. Do not create new billable services or tasks.
+- If no safe local access, watchdog permission, or accurate evidence is available, report BLOCKED/UNVERIFIED with precise gaps and no false PASS.
+- After your safe audit, the runner should create one Draft PR and report a compact machine-readable table of PASS / SIMULATED / PENDING / BLOCKED cases. Keep operational health checks running only if explicitly bounded and low-impact.

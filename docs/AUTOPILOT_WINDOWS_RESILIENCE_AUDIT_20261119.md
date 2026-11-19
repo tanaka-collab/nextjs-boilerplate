@@ -54,7 +54,7 @@ One initial isolated rotation probe accidentally appended a single benign synthe
 | 7. Stale heartbeat and benign restart | **SIMULATED; actual restart PENDING** | Stale-heartbeat classification and dry-run `WOULD_START` behavior passed. The live worker was left running; actual recovery from a stopped or crashed process was not exercised. |
 | 8. Preserve Codex sessions, Sendnav, and unrelated tasks | **PASS (no-impact audit)** | No Codex process, Sendnav job, unrelated task, or session was stopped or edited. Both dedicated task XML files were captured for comparison; task definitions remained unchanged. This is a no-interference check, not a long-duration coexistence test. |
 | 9. Exit/error log sanitation | **PASS in isolated tests; live Python runtime PENDING** | Redaction and fatal-exception regression tests passed. The active runner has not reloaded the edited module, so the new logging path has not been verified in the live process. |
-| 10. Repeated normal polling | **OBSERVED; health DEGRADED** | Health had advanced to cycle 94 and checked all four configured repositories. One error persisted because the configured worktree is dirty and belongs to an older task hash. This confirms repeated cycles, not healthy completion of the current task. |
+| 10. Repeated normal polling | **OBSERVED; health DEGRADED** | At the initial 18:03:32 JST readback, health was at cycle 94 and had checked all four configured repositories. By the 18:14:46 JST follow-up, it had completed cycle 99; one error persisted because the configured worktree is dirty and belongs to an older task hash. This confirms repeated cycles, not healthy completion of the current task. |
 | Actual Windows restart and subsequent logon | **PENDING** | No restart or logoff was initiated. The existing logon triggers and bounded Recovery self-check are in place to provide evidence after a user-initiated startup. |
 | 24-hour stability window | **PENDING** | Bounded local sampling began at 17:44:13 JST on 2026-11-19. A full 24 hours cannot be claimed before 17:44:13 JST on 2026-11-20 and requires later readback. |
 
@@ -66,6 +66,7 @@ One initial isolated rotation probe accidentally appended a single benign synthe
 - Watchdog dry-run fixtures: **PASS** for Running=`NO_ACTION`, Ready=`WOULD_START`, rejecting `-TestState` without `-DryRun`, stale/missing health classification, allowlisted sample fields, rotation/retention, and simulated unavailable storage with no C: write.
 - Supplemental isolated logger-rotation and singleton-lock probes: **PASS**. No force termination, machine restart, task stop, or D: disconnection was used.
 - The initial ad-hoc PowerShell probe blocked by the existing policy when it omitted the scheduled task's child-only `-ExecutionPolicy Bypass`; the supported scheduled-task invocation was then used for the dry-run checks. No policy was changed.
+- **Historical run metadata:** Exact command lines and per-check execution dates/times are not present in the retained evidence examined for this correction and remain **UNVERIFIED**. The audit snapshot is dated 2026-11-19, but it does not establish each check's execution date/time. The recorded module names, exclusion, elapsed duration, and result summaries are preserved as reported; this revision did not rerun those application tests to reconstruct the original evidence.
 
 ## Independent review
 

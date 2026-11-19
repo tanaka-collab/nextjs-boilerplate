@@ -62,39 +62,39 @@ One initial isolated rotation probe accidentally appended a single benign synthe
 ### Test commands and results
 
 - **Original run:** The previously reported 56-test result (`3.830s`) and earlier ad-hoc probes are operator-recorded only. Their original commands and per-check timestamps were not retained and remain **UNVERIFIED**; the follow-up run below is not presented as reconstructed historical evidence.
-- **Follow-up run:** All times are JST on 2026-11-19. Exact commands, start/end timestamps, exit codes, and outputs are recorded in `D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\verification.json`. The evidence folder is on D: and contains no production raw logs or credentials.
+- **Follow-up run:** All times are JST on 2026-11-19. The manifest covers 19:06:15.3172419–19:06:25.5420378 JST and records `result=PASS`, `failed_checks=0`, exact commands, per-check start/end times, exit codes, and captured output. Its SHA-256 is `d9e98bdc1cd38b4b659948e3dc92c8112f4ebb2fd90ba0783aaea91af9143946`. It is stored at `D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\verification.json`. The evidence folder is on D: and contains no production raw logs or credentials.
 
-  - **Python unit suite — 56 passed, 3.955s, exit 0; 19:06:15.3172419–19:06:19.4199291.** It excludes only `test_process_lock_blocks_second_process_and_releases_after_crash`, which force-terminates a child.
+  - **Python unit suite — 56 passed, 3.955s, exit 0; 19:06:15.3172419–19:06:19.4199291.** It excludes only `test_process_lock_blocks_second_process_and_releases_after_crash`, which force-terminates a child. Captured output: `Ran 56 tests in 3.955s; OK`.
 
     ```powershell
     python "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\run_unittest_suite.py"
     ```
 
-  - **Python AST — PASS, four files, exit 0; 19:06:19.4587714–19:06:19.5376334.**
+  - **Python AST — PASS, four files, exit 0; 19:06:19.4587714–19:06:19.5376334.** Captured output: `PYTHON_AST_OK files=4`.
 
     ```powershell
     python "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\check_ast.py"
     ```
 
-  - **Watchdog parser — PASS, Windows PowerShell 5.1, 1,072 tokens and zero parse errors, exit 0; 19:06:19.5418307–19:06:19.8661391.**
+  - **Watchdog parser — PASS, Windows PowerShell 5.1, 1,072 tokens and zero parse errors, exit 0; 19:06:19.5418307–19:06:19.8661391.** Captured output: `{"result":"PASS","parser":"5.1.26100.9974","token_count":1072,"error_count":0}`.
 
     ```powershell
     powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\check_watchdog_parser.ps1" -WatchdogPath "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\watchdog.ps1"
     ```
 
-  - **Watchdog isolated fixtures — PASS, exit 0; 19:06:19.8691446–19:06:22.1709456.** Running returned `NO_ACTION`; Ready returned `WOULD_START`; `-TestState` without `-DryRun` returned exit 2; missing/stale health and allowlisted fields were checked; rotation retained both generations; an unavailable drive returned `STORAGE_UNAVAILABLE` and had no write target. Every fixture path was below the D: evidence folder except the deliberately absent drive.
+  - **Watchdog isolated fixtures — PASS, exit 0; 19:06:19.8691446–19:06:22.1709456.** Captured results: Running=`NO_ACTION`; Ready=`WOULD_START`; missing `-DryRun`=exit 2/`TEST_STATE_REQUIRES_DRY_RUN`; missing health=`missing`; stale health=`stale`; allowlisted field set exact; rotation retained two generations; unavailable drive=`STORAGE_UNAVAILABLE` with `no_drive_write=true`. Every fixture path was below the D: evidence folder except the deliberately absent drive.
 
     ```powershell
     powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\run_watchdog_fixtures.ps1" -WatchdogPath "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\watchdog.ps1" -TestRoot "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\watchdog-tests-20261119-190615312"
     ```
 
-  - **READY intake/automation fixture — PASS, exit 0; 19:06:22.1717908–19:06:25.5292815.** The real `process()` path read the canonical task from a local bare Git remote, produced branch `autopilot/task-4349fae9f405`, invoked one implementation stub, one read-only review stub, and one Draft PR stub, then pushed only to that local bare remote. Replaying the same task was suppressed. A dirty fixture with the old hash was refused, and its untracked sentinel remained byte-for-byte unchanged. The fixture used no real GitHub network or Codex CLI.
+  - **READY intake/automation fixture — PASS, exit 0; 19:06:22.1717908–19:06:25.5292815.** Captured summary: task SHA `4349fae9f405...`; branch `autopilot/task-4349fae9f405`; one implementation, one read-only review, and one PR-stub call; same-hash replay suppressed; old-hash dirty fixture refused; untracked sentinel preserved byte-for-byte. The real `process()` path used a local bare Git remote and pushed only there. No real GitHub network or Codex CLI was used.
 
     ```powershell
     python "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\run_intake_fixture.py" "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253" "D:\RYU_Application data\codex\chappy-autopilot"
     ```
 
-  - **Hash normalization probe — PASS; 19:12:02.0521791–19:12:02.0719419.** It read the preserved canonical handoff fixture and recorded 5,641 raw bytes / SHA `4349fae9f405...` versus 5,640 stripped bytes / SHA `30790788d1f4...` in `hash_normalization.json`.
+  - **Hash normalization probe — PASS, exit 0; 19:12:02.0521791–19:12:02.0719419.** It read the preserved canonical handoff fixture and recorded 5,641 raw bytes / SHA `4349fae9f405...` versus 5,640 stripped bytes / SHA `30790788d1f4...` in `hash_normalization.json` (SHA-256 `f2a5925a4e06f99267d248779c5f5226d2a45cc1de22fcf16e979b97724f61f5`).
 
     ```powershell
     powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\hash_normalization_probe.ps1" -TaskFile "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\HANDOFF_TASK_fixture.md" -EvidencePath "D:\RYU_Application data\codex\storage-maintenance\chappy-autopilot\pr11-review-evidence-20261119-184253\hash_normalization.json"
@@ -109,7 +109,7 @@ One initial isolated rotation probe accidentally appended a single benign synthe
 
 **Read-only local alternative:** PowerShell, Git, the GitHub connector, the local source, scheduler/health files, backup manifest, test outputs, and the current PR diff were readable. The canonical handoff hashes and recorded test outputs were compared with the local evidence files. This verifies the reported test runs and observed state; it is not a second Codex reviewer and does not convert the reviewer-runtime failure into an independent PASS.
 
-The latest ChatGPT review available at this snapshot is review `5972412847`, submitted at 18:28:49 JST against HEAD `466996a5f43d61313def25b884958392109f092a`, with result **BLOCKED** because the local commands and timestamps were not yet in the document. At the 19:12 JST process check, no task-specific `codex exec` correction process was active; the existing Codex desktop processes were left untouched. The new same-PR push will generate a synchronize event; its review result is not available at this snapshot and remains **PENDING**. The 18:19:52 JST review `5972297569` was **CHANGES_REQUESTED** and its cycle-94/99 finding is now reconciled in the text above.
+The latest ChatGPT review available at the `be1b08c` snapshot was review `5973142031`, submitted at 19:20:06 JST against HEAD `be1b08c993475569bfb7892d7e04761c6473a40d`, with result **BLOCKED**. It confirmed the cycle sequence and the command/time/result entries, then requested the verification-manifest SHA-256 and output summaries in this same document; this revision adds them above. It also stated that the remote reviewer cannot access the local D: source or original evidence, so that part remains **INDEPENDENTLY UNVERIFIED**. At the 19:12 JST process check, no task-specific `codex exec` correction process was active; the existing Codex desktop processes were left untouched. The next same-PR push will generate another synchronize event; that review result is not yet available and remains **PENDING**. The 18:19:52 JST review `5972297569` was **CHANGES_REQUESTED** and its cycle-94/99 finding is reconciled above.
 
 ## Rollback and pending evidence
 
